@@ -38,7 +38,11 @@ type TpTest struct {
 }
 
 func NewTpTest(space *Space, chanLen int, periodSecond int64, callBack func(name string, start int64, sortUses []int)) *TpTest {
-	c := make(chan int64, chanLen)
+	l := chanLen
+	if space.enable.Load() {
+		l = chanLen
+	}
+	c := make(chan int64, l)
 
 	return &TpTest{
 		Mutex:           sync.Mutex{},
@@ -62,6 +66,14 @@ func (t *TpTest) Exe(f func()) {
 }
 
 func (t *TpTest) SetEnable(flag bool) bool {
+	if flag {
+		c := make(chan int64, t.chanLen)
+		t.uses.Swap(unsafe.Pointer(&c))
+	} else {
+		c := make(chan int64, 0)
+		t.uses.Swap(unsafe.Pointer(&c))
+	}
+
 	return t.space.enable.Swap(flag)
 }
 

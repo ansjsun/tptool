@@ -1,6 +1,7 @@
 package tp_test
 
 import (
+	"fmt"
 	tp "github.com/ansjsun/tptool"
 	"go.uber.org/atomic"
 	"strconv"
@@ -19,7 +20,18 @@ func TestTp(t *testing.T) {
 
 	tt := tp.NewTpTest(tp.NewSpace("test"), 2000000, 1, tp.PrintCallback)
 
-	tt.SetEnable(true)
+	go func() {
+		time.Sleep(3000)
+		fmt.Println("to open")
+		tt.SetEnable(true)
+		time.Sleep(3000)
+		fmt.Println("to close")
+		tt.SetEnable(false)
+		time.Sleep(3000)
+		fmt.Println("to open")
+		tt.SetEnable(true)
+	}()
+
 
 	wg := &sync.WaitGroup{}
 
