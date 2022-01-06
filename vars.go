@@ -2,12 +2,12 @@ package tp
 
 import "go.uber.org/atomic"
 
-type space struct {
+type Space struct {
 	name   string
 	enable *atomic.Bool
 }
 
-func newSpace(name string) *space {
-	return &space{name: name, enable: atomic.NewBool(false)}
+func NewSpace(name string) *Space {
+	return &Space{name: name, enable: atomic.NewBool(false)}
 }
 

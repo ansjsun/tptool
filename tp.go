@@ -29,7 +29,7 @@ func PrintCallback(name string, start int64, sortUses []int) {
 
 type TpTest struct {
 	sync.Mutex
-	space           *space
+	space           *Space
 	uses            *atomic.UnsafePointer
 	periodSecond    int64
 	startTimeSecond *atomic.Int64
@@ -37,7 +37,7 @@ type TpTest struct {
 	chanLen         int
 }
 
-func NewTpTest(space *space, chanLen int, periodSecond int64, callBack func(name string, start int64, sortUses []int)) *TpTest {
+func NewTpTest(space *Space, chanLen int, periodSecond int64, callBack func(name string, start int64, sortUses []int)) *TpTest {
 	c := make(chan int64, chanLen)
 
 	return &TpTest{
