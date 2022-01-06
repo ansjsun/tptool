@@ -2,7 +2,8 @@
 
 打印tp99 tp90 等信息
 
-````aidl
+````go
+
 package tp
 
 import (
