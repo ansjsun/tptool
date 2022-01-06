@@ -39,8 +39,8 @@ type TpTest struct {
 
 func NewTpTest(space *Space, chanLen int, periodSecond int64, callBack func(name string, start int64, sortUses []int)) *TpTest {
 	l := chanLen
-	if space.enable.Load() {
-		l = chanLen
+	if !space.enable.Load() {
+		l = 0
 	}
 	c := make(chan int64, l)
 
