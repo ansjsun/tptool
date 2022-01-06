@@ -1,13 +1,21 @@
 package tp
 
 import (
+	"strconv"
 	"sync"
 	"testing"
 	"time"
 )
 
+var testMap = sync.Map{}
+
 func TestTp(t *testing.T) {
+	for i := 0; i < 1000; i++ {
+		testMap.Store(strconv.Itoa(i), strconv.Itoa(i))
+	}
+
 	tp := NewTpTest(newSpace("test"), 2000000, 1, PrintCallback)
+
 
 	wg := &sync.WaitGroup{}
 
@@ -27,6 +35,8 @@ func TestTp(t *testing.T) {
 
 func run(tp *TpTest) {
 	now := NowMicro()
-	time.Sleep(100000)
+	for i := 0; i < 2000; i++ {
+		testMap.Store(strconv.Itoa(i), strconv.Itoa(i))
+	}
 	tp.End(now)
 }
