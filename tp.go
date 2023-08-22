@@ -2,11 +2,12 @@ package tp
 
 import (
 	"fmt"
-	"go.uber.org/atomic"
 	"sort"
 	"sync"
 	"time"
 	"unsafe"
+
+	"go.uber.org/atomic"
 )
 
 func PrintCallback(name string, start int64, sortUses []int) {
@@ -15,10 +16,18 @@ func PrintCallback(name string, start int64, sortUses []int) {
 		fmt.Println("data so less", sortUses)
 		return
 	}
+
+	sum := 0
+	for _, v := range sortUses {
+		sum += v
+	}
+
 	fmt.Println(
 		"name", name,
 		"start", start,
 		"all", len(sortUses),
+		"sum", sum,
+		"avg", float32(sum)/float32(l),
 		"min", sortUses[0],
 		"max", sortUses[l-1],
 		"tp90", sortUses[int(float32(l)*0.9)],
