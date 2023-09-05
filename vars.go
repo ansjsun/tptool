@@ -2,8 +2,9 @@ package tp
 
 import (
 	"fmt"
-	"go.uber.org/atomic"
 	"sync"
+
+	"go.uber.org/atomic"
 )
 
 type Space struct {
@@ -21,6 +22,10 @@ var count = atomic.NewInt32(0)
 
 func NewTp(name string) {
 	tpMap.Store(name, NewTpTest(NewSpace(name), 100000, 1, PrintCallback))
+}
+
+func NewTpWithCallbach(name string, callback func(name string, start int64, sortUses []int)) {
+	tpMap.Store(name, NewTpTest(NewSpace(name), 100000, 1, callback))
 }
 
 func Exe(name string, fn func()) {
