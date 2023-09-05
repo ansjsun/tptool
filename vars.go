@@ -24,7 +24,7 @@ func NewTp(name string) {
 	tpMap.Store(name, NewTpTest(NewSpace(name), 100000, 1, PrintCallback))
 }
 
-func NewTpWithCallbach(name string, callback func(name string, start int64, sortUses []int)) {
+func NewTpWithCallback(name string, callback func(name string, start int64, sortUses []int)) {
 	tpMap.Store(name, NewTpTest(NewSpace(name), 100000, 1, callback))
 }
 
